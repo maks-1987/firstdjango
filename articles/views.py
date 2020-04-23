@@ -1,10 +1,9 @@
-from django.http import HttpResponse
+from django.shortcuts import render
+
+from .models import Article, Comment
 
 
 # Create your views here.
 def index(request):
-    return HttpResponse('Hello world!')
-
-
-def test(request):
-    return HttpResponse('<h2>Test view!</h2>')
+    last_articles_list = Article.objects.order_by('-pub_date')[:5]
+    return render(request, 'articles/list.html', {'last_articles_list':last_articles_list})
